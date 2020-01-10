@@ -1,0 +1,5 @@
+require 'spree_core'
+require 'spree_extension'
+require 'spree_pxpay/config'
+require 'spree_pxpay/engine'
+require 'spree_pxpay/version'
