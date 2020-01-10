@@ -1,4 +1,4 @@
 module Spree
-  class PxPayCheckout < ActiveRecord::Base
+  class PxpayCheckout < ActiveRecord::Base
   end
 end
