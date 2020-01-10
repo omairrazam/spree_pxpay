@@ -56,13 +56,13 @@ SpreePxpay.config do |c|
 end
 ``` 
 
-#### Request Options
+#### Transaction Request Options
 
-These are set per request. Currently all transaction fields are params from the POST request.
+These are set per request. Currently all transaction fields are parameters from the POST request.
  
 Later the API endpoint will accept existing orders as inputs.
 
-[query string param] => [PxPay GenerateRequest XML field]
+[query param] => [PxPay GenerateRequest XML field]
 - merchant_ref => MerchantReference
 - return_url => UrlSuccess and UrlFail. Should be fully formed, i.e. start with 'https://...'
 - callback_url => UrlCallback
