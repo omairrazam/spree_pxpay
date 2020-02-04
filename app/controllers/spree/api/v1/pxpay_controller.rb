@@ -58,18 +58,30 @@ module Spree
           # uncomment to log http requests
           #require 'httplog'
 
-          # TODO: We should get merchant reference and charge amounts from existing Orders
+          order = Spree::Order.find_by(number: params[:merchant_ref])
+          #render json: order
+          logger = Rails.logger
+          logger.info "Order? #{order}"
+          logger.info "Order? #{order[:number]}_#{Time.now.to_i.to_s}"
+
+          transaction_id = order[:number] + "_" + Time.now.to_i.to_s
+
           pxpay_helper = ::OffsitePayments::Integrations::Pxpay::Helper.new(
-              params[:merchant_ref],
+              transaction_id,
               SpreePxpay::CONFIG[:pxpay_user_id],
               credential2: SpreePxpay::CONFIG[:pxpay_key],
               return_url: params[:return_url],
               notify_url: params[:callback_url],
-              amount: params[:amount],
-              currency: params[:currency]
+              amount: order[:total],
+              currency: order[:currency]
           )
 
           hpp_form_url = pxpay_helper.credential_based_url
+
+          Spree::PxpayCheckout.create(
+              transaction_id: transaction_id,
+              state: "Created",
+          )
 
           render json: hpp_form_url
         end

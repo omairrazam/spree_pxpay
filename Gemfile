@@ -14,6 +14,8 @@ gem 'rails-controller-testing'
 gem 'rubocop', require: false
 gem 'rubocop-rspec', require: false
 
+gem 'http'
+
 gem 'money'
 gem 'offsite_payments', path: '../offsite_payments'
 
