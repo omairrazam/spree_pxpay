@@ -1,4 +1,4 @@
-Spree::Payment::GatewayOptions.class_eval do
+module Spree::Payment::GatewayOptionsDecorator
   def hash_methods
     %i[
       email
@@ -16,4 +16,6 @@ Spree::Payment::GatewayOptions.class_eval do
       order
     ]
   end
+
+  Spree::Payment::GatewayOptions.prepend self
 end

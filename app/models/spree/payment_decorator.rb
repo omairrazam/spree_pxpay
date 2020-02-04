@@ -1,4 +1,4 @@
-Spree::Payment.class_eval do
+module Spree::PaymentDecorator
   def transaction_id
     if payment_method.is_a? Spree::Gateway::PxpayGateway
       source.transaction_id
@@ -9,32 +9,6 @@ Spree::Payment.class_eval do
 
   def build_source
     logger = Rails.logger
-    logger.info("Building source")
-    logger.info("Building source")
-    logger.info("Building source")
-    logger.info("Building source")
-    logger.info("Building source")
-    logger.info("Building source")
-    logger.info("Building source")
-    logger.info("Building source")
-    logger.info("Building source")
-    logger.info("Building source")
-    logger.info("Building source")
-    logger.info("Building source")
-    logger.info("Building source")
-    logger.info("Building source")
-    logger.info("Building source")
-    logger.info("Building source")
-    logger.info("Building source")
-    logger.info("Building source")
-    logger.info("Building source")
-    logger.info("Building source")
-    logger.info("Building source")
-    logger.info("Building source")
-    logger.info("Building source")
-    logger.info("Building source")
-    logger.info("Building source")
-    logger.info("Building source")
     logger.info("Building source")
 
     return unless new_record?
@@ -64,4 +38,6 @@ Spree::Payment.class_eval do
     process! if order.completed?
     #end
   end
+
+  Spree::Payment.prepend self
 end

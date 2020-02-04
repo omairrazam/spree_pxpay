@@ -1,38 +1,8 @@
-Spree::Payment::Processing.module_eval do
+module Spree::Payment::ProcessingDecorator
   def process!(_amount = nil)
     logger = Rails.logger
     logger.info("About to create payment")
-    logger.info("About to create payment")
-    logger.info("About to create payment")
-    logger.info("About to create payment")
-    logger.info("About to create payment")
-    logger.info("About to create payment")
-    logger.info("About to create payment")
-    logger.info("About to create payment")
-    logger.info("About to create payment")
-    logger.info("About to create payment")
-    logger.info("About to create payment")
-    logger.info("About to create payment")
-    logger.info("About to create payment")
-    logger.info("About to create payment")
-    logger.info("About to create payment")
-    logger.info("About to create payment")
-    logger.info("About to create payment")
-    logger.info("About to create payment")
-    logger.info("About to create payment")
-    logger.info("About to create payment")
-    logger.info("About to create payment")
-    logger.info("About to create payment")
-    logger.info("About to create payment")
-    logger.info("About to create payment")
-    logger.info("About to create payment")
-    logger.info("About to create payment")
-    logger.info("About to create payment")
-    logger.info("About to create payment")
-    logger.info("About to create payment")
-    logger.info("About to create payment")
-    logger.info("About to create payment")
-    logger.info("About to create payment")
+
     if payment_method.is_a? Spree::Gateway::PxpayGateway
       process_with_pxpay
     else
@@ -58,4 +28,6 @@ Spree::Payment::Processing.module_eval do
     )
     handle_response(response, :started_processing, :failure)
   end
+
+  Spree::Payment::Processing.prepend self
 end
