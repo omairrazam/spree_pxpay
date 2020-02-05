@@ -4,7 +4,9 @@ Add support for Windcave (ex. PaymentExpress) PxPay 2.0 gateway.
 
 Wraps offsite_payments gem.
 
-Don't use this extension in any live system. Highly experimental.
+Big thanks to spree-mollie-gateway.
+
+Don't use this extension in any live system. Highly experimental. Cover it with tests first.
 
 ## Installation
 

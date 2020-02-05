@@ -1,4 +1,8 @@
 module Spree::Payment::ProcessingDecorator
+  # Makes Zeitwerk happy
+end
+
+Spree::Payment::Processing.class_eval do
   def process!(_amount = nil)
     logger = Rails.logger
     logger.info("About to create payment")
@@ -28,6 +32,4 @@ module Spree::Payment::ProcessingDecorator
     )
     handle_response(response, :started_processing, :failure)
   end
-
-  Spree::Payment::Processing.prepend self
 end

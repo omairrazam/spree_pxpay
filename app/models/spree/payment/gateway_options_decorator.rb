@@ -1,4 +1,8 @@
 module Spree::Payment::GatewayOptionsDecorator
+  # Makes Zeitwerk happy
+end
+
+Spree::Payment::GatewayOptions.class_eval do
   def hash_methods
     %i[
       email
@@ -16,6 +20,4 @@ module Spree::Payment::GatewayOptionsDecorator
       order
     ]
   end
-
-  Spree::Payment::GatewayOptions.prepend self
 end

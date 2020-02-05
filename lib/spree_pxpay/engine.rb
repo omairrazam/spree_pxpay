@@ -22,12 +22,10 @@ module SpreePxpay
       end
 
       ::Rails.application.config.spree.payment_methods << Spree::Gateway::PxpayGateway
+      Spree::PermittedAttributes.source_attributes << :return_url
+      Spree::Api::ApiHelpers.payment_source_attributes << :return_url
     end
 
     config.to_prepare(&method(:activate).to_proc)
-
-    #initializer "spree.pxpay.payment_methods", :after => "spree.register.payment_methods" do |app|
-    #  app.config.spree.payment_methods << Spree::Gateway::PxPay
-    #end
   end
 end

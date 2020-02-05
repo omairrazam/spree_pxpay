@@ -1,17 +1,14 @@
 require 'offsite_payments'
 
+module OffsitePayments::Integrations::PxpayDecorator
+  # Makes Zeitwerk happy
+end
+
 module OffsitePayments #:nodoc:
   module Integrations #:nodoc:
     module Pxpay
-
-      #def self.token_url
-      #  production_url = 'https://sec.paymentexpress.com/pxpay/pxaccess.aspx'
-      #  uat_url = 'https://uat.paymentexpress.com/pxaccess/pxpay.aspx'
-      #  ENV['RAILS_ENV'] == 'production' ? production_url : uat_url
-      #end
-
       class Helper
-        # it's a copy of upstream with some extensions
+        # it's a copy of upstream with some extensions, we need to specify URL callback
         def initialize(order, account, options = {})
           @token_parameters = {
               'PxPayUserId'       => account,
@@ -42,48 +39,6 @@ module OffsitePayments #:nodoc:
           raise ArgumentError, "error - must specify pxpay_key"         if token_parameters['PxPayKey'].blank?
           raise ArgumentError, "error - must specify amount"            if token_parameters['AmountInput'].blank?
           raise ArgumentError, "error - must specify currency"          if token_parameters['CurrencyInput'].blank?
-        end
-      end
-    end
-  end
-end
-
-
-
-module Spree
-  module Api
-    module V1
-      class PxpayController < Spree::Api::BaseController
-        def create
-          # uncomment to log http requests
-          #require 'httplog'
-
-          order = Spree::Order.find_by(number: params[:merchant_ref])
-          #render json: order
-          logger = Rails.logger
-          logger.info "Order? #{order}"
-          logger.info "Order? #{order[:number]}_#{Time.now.to_i.to_s}"
-
-          transaction_id = order[:number] + "_" + Time.now.to_i.to_s
-
-          pxpay_helper = ::OffsitePayments::Integrations::Pxpay::Helper.new(
-              transaction_id,
-              SpreePxpay::CONFIG[:pxpay_user_id],
-              credential2: SpreePxpay::CONFIG[:pxpay_key],
-              return_url: params[:return_url],
-              notify_url: params[:callback_url],
-              amount: order[:total],
-              currency: order[:currency]
-          )
-
-          hpp_form_url = pxpay_helper.credential_based_url
-
-          Spree::PxpayCheckout.create(
-              transaction_id: transaction_id,
-              state: "Created",
-          )
-
-          render json: hpp_form_url
         end
       end
     end

@@ -8,10 +8,8 @@ module Spree
       logger = Rails.logger
       logger.info "Webhook called for PxPay transaction #{params[:result]}"
 
-      # test with ?result=00001100957328720b8069497ee91383
-
       pxpay = Spree::PaymentMethod.find_by_type 'Spree::Gateway::PxpayGateway'
-      pxpay.update_payment_status params[:result]
+      pxpay.update_payment_satus params[:result]
 
       head :ok
     end

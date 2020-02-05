@@ -1,4 +1,8 @@
 module Spree::AddressDecorator
+  # Makes Zeitwerk happy
+end
+
+Spree::Address.class_eval do
   def active_merchant_hash
     {
       name: full_name,
@@ -13,6 +17,4 @@ module Spree::AddressDecorator
       phone: phone
     }
   end
-
-  Spree::Address.prepend self
 end

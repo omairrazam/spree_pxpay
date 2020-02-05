@@ -21,11 +21,13 @@ Gem::Specification.new do |s|
   s.require_path = 'lib'
   s.requirements << 'none'
 
-  s.add_dependency 'offsite_payments'
   spree_version = '>= 3.2.0', '< 5.0'
   s.add_dependency 'spree_backend', spree_version
   s.add_dependency 'spree_core', spree_version
   s.add_dependency 'spree_extension'
+
+  s.add_dependency 'http'
+  s.add_dependency 'offsite_payments'
 
   s.add_development_dependency 'appraisal'
   s.add_development_dependency 'awesome_print'

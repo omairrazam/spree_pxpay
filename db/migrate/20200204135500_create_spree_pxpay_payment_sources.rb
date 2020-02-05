@@ -4,6 +4,7 @@ class CreateSpreePxpayPaymentSources < SpreeExtension::Migration[4.2]
       t.string :payment_id, index: true
       t.string :status, index: true
       t.string :payment_url
+      t.string :return_url
     end
   end
 end

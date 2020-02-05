@@ -1,4 +1,8 @@
 module Spree::PaymentDecorator
+  # Makes Zeitwerk happy
+end
+
+Spree::Payment.class_eval do
   def transaction_id
     if payment_method.is_a? Spree::Gateway::PxpayGateway
       source.transaction_id
@@ -8,36 +12,25 @@ module Spree::PaymentDecorator
   end
 
   def build_source
+    return unless new_record?
     logger = Rails.logger
     logger.info("Building source")
 
-    return unless new_record?
-
-    logger.info("Really building source")
-
-    logger.info source_attributes.present?
-    logger.info source.blank?
-    #logger.info payment_method.try(:payment_source_class)
+    # START Original handler
+    #if source_attributes.present? && source.blank? && payment_method.try(:payment_source_class)
+    #  self.source = payment_method.payment_source_class.new(source_attributes)
+    #  source.payment_method_id = payment_method.id
+    #  source.user_id = order.user_id if order
+    #end
+    # END Original handler
 
     if source_attributes.present? && source.blank? && payment_method.try(:payment_source_class)
+      # Sets the return URL from the incoming request parameters
       self.source = payment_method.payment_source_class.new(source_attributes)
-      source.payment_method_id = payment_method.id
-      source.user_id = order.user_id if order
+
+      # Spree will not process payments if order is completed.
+      # We should call process! for completed orders to create a new PxPay payment.
+      process! if order.completed?
     end
-
-    #if payment_method.is_a? Spree::Gateway::PxpayGateway && source.blank?
-    logger.info("Really building source2")
-    logger.info(order.completed?.to_s)
-
-    self.source = payment_method.payment_source_class.new
-    #source.payment_method_id = payment_method.id
-    #source.user_id = order.user_id if order
-
-    # Spree will not process payments if order is completed.
-    # We should call process! for completed orders to create a new Mollie payment.
-    process! if order.completed?
-    #end
   end
-
-  Spree::Payment.prepend self
 end
