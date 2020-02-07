@@ -108,7 +108,9 @@ module Spree
           payment.source.status = "Processed"
         else
           logger.info 'Payment has failed'
-          payment.source.status = "Failed (#{pxpay_response["Response"]["ReCo"]})"
+          payment.response_code = pxpay_response["Response"]["ReCo"]
+          payment.save!
+          payment.source.status = "Failed"
         end
 
         payment.source.save!
