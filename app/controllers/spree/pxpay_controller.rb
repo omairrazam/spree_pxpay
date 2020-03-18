@@ -9,7 +9,7 @@ module Spree
       logger.info "Webhook called for PxPay transaction #{params[:result]}"
 
       pxpay = Spree::PaymentMethod.find_by_type 'Spree::Gateway::PxpayGateway'
-      pxpay.update_payment_satus params[:result]
+      pxpay.update_payment_status params[:result]
 
       head :ok
     end
