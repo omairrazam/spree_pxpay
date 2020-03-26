@@ -21,7 +21,11 @@ module Spree
     def auto_capture?
       true
     end
-
+    
+    def method_type
+      'pxpay'
+    end
+    
     def source_required?
       true
     end
